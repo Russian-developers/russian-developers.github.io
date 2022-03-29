@@ -84,14 +84,11 @@ let ALast=0;
 let Update=()=>{
 let a=new XMLHttpRequest();
 let b=new XMLHttpRequest();
-a.open('GET','https://api.freshping.io/v1/public-check-response-times-reports/781965/?for_hours=12&aggregate_by=hours');
+a.open('GET',`https://api.allorigins.win/get?cb=${Date.now()}&url=https://statuspage.freshping.io/60602-xynny`);
 b.open('GET',`https://api.allorigins.win/get?cb=${Date.now()}&url=https://xynny.betteruptime.com/r/2jke/edb53`);
 a.onloadend=()=>{
 if(a.status===200){
-let ar=JSON.parse(a.response);
-let LatestRange=ar['response_times'][ar['response_times'].length-1];
-AState=((LatestRange['duration_seconds_not_responding']&&LatestRange['average_response_time_milliseconds_reporting_error']&&LatestRange['duration_seconds_reporting_error'])===null&&!((LatestRange['duration_seconds_paused']>0)&&(LatestRange['duration_seconds_paused']>=ALast)))?'green':((LatestRange['duration_seconds_paused']>0)?'orange':'red');
-ALast=LatestRange['duration_seconds_paused']+1;
+AState=a.responseText.includes(' All systems operational ')?'green':'orange';
 Updated++;
 }else{
 document.getElementById('error-modal').setAttribute('style','position: fixed;top: 0;right: 0;bottom: 0;left: 0;z-index: 1010;overflow-y: auto;-webkit-overflow-scrolling: touch;padding: 15px 15px;background: rgba(0,0,0,.6);opacity: 1;transition: .15s linear;');
